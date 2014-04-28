@@ -1,0 +1,20 @@
+AddType text/css .css
+AddType application/x-httpd-php .php .htm
+AddHandler application/x-httpd-php .php .htm
+AddDefaultCharset UTF-8
+php_flag  display_errors        on
+php_flag  display_startup_errors on
+php_value error_reporting        2047
+php_flag  log_errors on
+# php_value error_log  e:\PHP_errors.log
+
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php

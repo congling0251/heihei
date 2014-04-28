@@ -1,0 +1,45 @@
+﻿
+#banner
+{
+	width: 550px;
+	height: 400px;
+	margin: 0px auto;
+	overflow: hidden;
+	margin-top: 0px;
+}
+#btn_num
+{
+	width: 200px;
+	height: 30px;
+	position: relative;
+}
+#btn_num a
+{
+	
+   background-image:url(../img/pagination.png); 
+	
+	float: left;
+	width: 19px;
+	height: 19px;
+	line-height: 18px;
+	margin-left: 5px;
+
+	
+}
+#btn_num a.activeSlide
+{
+	background-image:url(../img/pagination.png);
+	background-position:0 -44px;
+}
+#btn_num a:hover
+{
+	cursor:pointer;
+	background-image:url(../img/pagination.png);
+	background-position:0 -21px;
+}
+.btn_do
+{
+	width:19px;
+	height:19px;
+	
+	}
