@@ -3,7 +3,6 @@
 class HomePageController extends Controller {
 
     public $layout = 'index';
-    public $nowtime = 0;
     public $limitTime = 2;
 
     public function actionIndex($id = '') {
@@ -37,7 +36,6 @@ class HomePageController extends Controller {
         $friendmessage = $this->getfriendmessage();
         $message = $this->getmessages();
         $recentvisitors = $this->getrecentvisitors($id);
-        $this->nowtime = time();
         $this->render('index', array('model' => $model, 'visitorflag' => $visitorflag, 'layout' => $layout, 'message' => $message, 'recentvisitors' => $recentvisitors, 'prefriends' => $prefriends, 'friendmessage' => $friendmessage));
     }
 
@@ -111,7 +109,7 @@ class HomePageController extends Controller {
 
     public function actionnewnoteajax() {
         $userid = Yii::app()->user->getState('userid');
-        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") and t.message_date> ".$this->nowtime;
+        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") and t.message_date> ".time();
         $result = yii::app()->db->createCommand($sql);
         $friendmessages = $result->queryAll();
         $this->ajaxOutputJSON(1, 'success', count($friendmessages));
