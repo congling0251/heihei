@@ -12,7 +12,7 @@
                     <small><?php echo isset($prefriend['college'])?$prefriend['college']:''; ?></small>
                     <br/>
                     <small><?php echo isset($prefriend['company'])?$prefriend['company']:''; ?></small>
-                    <a onclick="addfriend(<?php echo $prefriend['userid']; ?>,<?php echo Yii::app()->createUrl('friend/addfriend'); ?>)">
+                    <a onclick="addfriend(<?php echo $prefriend['userid']; ?>)">
                         <i class="icon-plus"></i>
                         加为嘿友
                     </a>

@@ -112,7 +112,8 @@ class HomePageController extends Controller {
         $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") and t.message_date> ".time();
         $result = yii::app()->db->createCommand($sql);
         $friendmessages = $result->queryAll();
-        $this->ajaxOutputJSON(1, 'success', count($friendmessages));
+        $nowTime = time();
+        $this->ajaxOutputJSON(1, 'success', array('num'=>count($friendmessages),'time'=>$nowTime));
     }
 
     private function getfriendmessage() {

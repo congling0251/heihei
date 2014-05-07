@@ -26,11 +26,12 @@ class FriendController extends Controller {
         $friendscriteria->distinct = true;
         $friendscriteria->join = "JOIN Hh_Friends on t.userid = Hh_Friends.userid";
         if (isset($_POST['name']))
-            $friendscriteria->condition = 't.username="' . $_POST['name'] . '" and t.userid != ' . $userid . ' and t.userid !=Hh_Friends.friendid';
+            $friendscriteria->condition = "t.username like '%" . $_POST['name'] . "%' and t.userid != " . $userid . " and t.userid !=Hh_Friends.friendid";
         else {
-           $temp= 't.userid != ' . $userid . ' and t.userid !=Hh_Friends.friendid' . (isset($_POST['gender'])&&$_POST['gender'] != '' ? ' and t.sex="' . $_POST['gender'].'"' : '') . (isset($_POST['school'])&&$_POST['school'] != '' ? ' and t.college="' . $_POST['school'].'"' : '') . (isset($_POST['company'])&&$_POST['company'] != '' ? ' and t.company="' . $_POST['company'].'"' : '');
+           $temp= "t.userid != " . $userid . " and t.userid !=Hh_Friends.friendid" . (isset($_POST['gender'])&&$_POST['gender'] != '' ? " and t.sex='" . $_POST['gender']."'" : "") . (isset($_POST['school'])&&$_POST['school'] != '' ? " and t.college='" . $_POST['school'].'"' : "") . (isset($_POST['company'])&&$_POST['company'] != '' ? " and t.company='" . $_POST['company']."'" : "");
             $friendscriteria->condition = $temp;
         }
+        print_r($friendscriteria);
         $sefriends = HhUsers::model()->findAll($friendscriteria);
         $this->renderPartial(
                 'addfriends', array(

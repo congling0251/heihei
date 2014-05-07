@@ -21,7 +21,7 @@ class Controller extends CController
 	 */
 	public $breadcrumbs=array();
         
-         public function accessRules()
+    public function accessRules()
     {
         return array(
             array('allow', // allow authenticated users to access all actions
@@ -30,7 +30,7 @@ class Controller extends CController
             )
         );
     }
-      public function ajaxOutputJSON($result = 1, $msg = '', $data = array())
+    public function ajaxOutputJSON($result = 1, $msg = '', $data = array())
     {
         echo CJSON::encode(array(
                     'result' => $result,

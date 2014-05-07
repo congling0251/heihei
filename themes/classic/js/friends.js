@@ -43,9 +43,9 @@ $(document).ready(function(){
     });
 
 });
-    function addfriend(_id,_url){
+    function addfriend(_id){
         $.ajax({
-	        url: _url,
+	        url: '/heihei/friend/friend/addfriend',
 	        type:"POST",
                 data:{addfriendid:_id},
 	        dataType:'json',
