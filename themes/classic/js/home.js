@@ -2,19 +2,15 @@
     //布局数组，很重要！
 (function(window){
     var layouts = new Array("userinfo","userstatus","usermessage","visitor","heiyoupanel");
-
-    var showdiv = function(str){
-        
-    }
-    function showclosebutton(){
+    var showclosebutton =function(){
         changebuttondisplay("block");
     }
 
-    function hideclosebutton(){
+    var hideclosebutton = function(){
         changebuttondisplay("none");
     }
 
-    function changebuttondisplay(status){
+    var changebuttondisplay =function(status){
         var clist = document.getElementsByName('close');
         for (var i = 0; i < clist.length; i++) {
             clist[i].style.display = status;
@@ -22,7 +18,7 @@
     }
 
     //增加模块
-    function addui(){
+    var addui = function(){
         //只显示已经被删除的模块
         for (var i = 0; i < layouts.length; i++) {
             if($("#"+layouts[i]).css('display')==="block")
@@ -35,7 +31,7 @@
     }
 
     //增加模块后保存
-    function addsave(){
+    var addsave = function(){
         var layout = "";
         for (var i = 0; i < layouts.length; i++) {
                    
@@ -58,12 +54,12 @@
     }
 
     //关闭div
-    function closediv(){
+    var closediv = function(){
         event.srcElement.parentElement.style.display="none";
     }
 
     //显示大图片
-    function showdefault(){
+    var showdefault = function(){
         if(event.srcElement.style.width<="210px")
             event.srcElement.style.width="480px";
         else
@@ -71,8 +67,7 @@
     }
 
     //发送POST请求，保存修改后的界面
-    function postMessage(str)
-    { 
+    var postMessage = function (str) { 
         $.ajax({
                 url: "/heihei/HomePage/savelayout",
                 type:"POST",
@@ -93,7 +88,7 @@
     }
 
     //保存界面
-    function saveui(str){
+    var saveui = function(str){
         var layout="";
         for (var i = 0; i < layouts.length; i++) {
             if($("#"+layouts[i]).css('display') === "block")
@@ -114,7 +109,7 @@
         }
         hideclosebutton();
     }
-    function message_submit(){
+    var message_submit = function(){
         var _data={'message':$(".heimessage").val()};
           
         $.ajax({
@@ -131,7 +126,7 @@
                     }
             }); 
     };
-    function newnoteajax(){
+    var newnoteajax = function(){
             $.ajax({
                 url: '/heihei/HomePage/newnoteajax',
                 type:"POST",
@@ -146,7 +141,7 @@
             }); 
     }
 
-    function moremessage(_url){
+    var moremessage = function(_url){
             $.ajax({
                 url: _url,
                 type:"POST",
@@ -159,6 +154,57 @@
                     }
             }); 
     }
+    $(function(){
+        $('#message_button').bind('click',message_submit);
+        $('#heiyoupanel').delegate('.addFriend','click',function(){
+            var _id = $(this).attr('data-id');
+            $.ajax({
+                url: '/heihei/friend/friend/addfriend',
+                type:"POST",
+                    data:{addfriendid:_id},
+                dataType:'json',
+                success:function(data){
+                                alert(data.data);
+                                window.location.reload();
+                },
+                    error:function(msg){
+                       console.log(msg.statusText);
+                    }
+            }); 
+        });
+        $('#friendResult').delegate('.addFriend','click',function(){
+            var _id = $(this).attr('data-id');
+            $.ajax({
+                url: '/heihei/friend/friend/addfriend',
+                type:"POST",
+                    data:{addfriendid:_id},
+                dataType:'json',
+                success:function(data){
+                                alert(data.data);
+                                window.location.reload();
+                },
+                    error:function(msg){
+                       console.log(msg.statusText);
+                    }
+            }); 
+        });
+        $('#friendManage').delegate('.addFriend','click',function(){
+            var _id = $(this).attr('data-id');
+            $.ajax({
+                url: '/heihei/friend/friend/deletefriend',
+                type:"POST",
+                    data:{deletefriendid:_id},
+                dataType:'json',
+                success:function(data){
+                                alert(data.data);
+                                window.location.reload();
+                },
+                    error:function(msg){
+                       console.log(msg.statusText);
+                    }
+            }); 
+        });
+        setInterval(newnoteajax(),5000);
+    });
 })(window);
-
 

@@ -12,7 +12,7 @@
                     <small><?php echo isset($prefriend['college'])?$prefriend['college']:''; ?></small>
                     <br/>
                     <small><?php echo isset($prefriend['company'])?$prefriend['company']:''; ?></small>
-                    <a onclick="addfriend(<?php echo $prefriend['userid']; ?>)">
+                    <a class="addFriend" data-id =<?php echo isset($prefriend['userid'])?$prefriend['userid'] : '0'; ?>" >
                         <i class="icon-plus"></i>
                         加为嘿友
                     </a>

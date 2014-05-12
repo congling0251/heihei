@@ -1,4 +1,4 @@
-<div class="pull-left" style="width: 500px;">
+<div id="friendResult" class="pull-left" style="width: 500px;">
     <?php if (count($sefriends) > 0): ?>
         <?php foreach ($sefriends as $index => $sefriend): ?>
                 <div class="thumbnail friends pull-left sefriend">
@@ -7,7 +7,7 @@
                         <strong><?php echo isset($sefriend['username']) ? $sefriend['username']:''; ?></strong>
                         <small><?php echo isset($sefriend['college']) ? $sefriend['college'] : ''; ?></small>
                         <small><?php echo isset($sefriend['company']) ? $sefriend['company'] : ''; ?></small>
-                        <a onclick="addfriend(<?php echo isset($sefriend['userid']) ? $sefriend['userid']:0; ?>, '<?php echo Yii::app()->createUrl('friend/friend/addfriend'); ?>')">
+                        <a class="addFriend" data-id="<?php echo isset($sefriend['userid'])?$sefriend['userid'] : '0'; ?>">
                             <i class="icon-plus"></i>
                             加为嘿友
                         </a>

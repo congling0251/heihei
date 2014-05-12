@@ -1,4 +1,4 @@
-<div class="pull-left" style="width: 500px;">
+<div id="friendManage" class="pull-left" style="width: 500px;">
 	<legend>全部好友</legend>
   <?php if (count($myfriends) > 0): ?>
         <?php foreach ($myfriends as $index => $myfriend): ?>
@@ -8,7 +8,7 @@
                         <strong><?php echo isset($myfriend->username) ? $myfriend->username:''; ?></strong>
                         <small><?php echo isset($myfriend->college) ? $myfriend->college : ''; ?></small>
                         <small><?php echo isset($myfriend->company) ? $myfriend->company : ''; ?></small>
-                        <a onclick="deletefriend(<?php echo isset($myfriend->userid)?$myfriend->userid:''; ?>, '<?php echo Yii::app()->createUrl('friend/friend/deletefriend'); ?>')">
+                        <a class="addFriend" data-id="<?php echo isset($myfriend->userid)?$myfriend->userid:''; ?>">
                             <i class="icon-plus"></i>
                             删除嘿友
                         </a>

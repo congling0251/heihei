@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
     $("#friendtabs").delegate("#name_serchfriend","click",function(e){
         var _name=$("#newfriendname").val();
         if(_name==""){
@@ -43,33 +43,3 @@ $(document).ready(function(){
     });
 
 });
-    function addfriend(_id){
-        $.ajax({
-	        url: '/heihei/friend/friend/addfriend',
-	        type:"POST",
-                data:{addfriendid:_id},
-	        dataType:'json',
-	        success:function(data){
-                            alert(data.data);
-                            window.location.reload();
-	        },
-                error:function(msg){
-                   console.log(msg.statusText);
-                }
-	    }); 
-}
-function deletefriend(_id,_url){
-        $.ajax({
-	        url: _url,
-	        type:"POST",
-                data:{deletefriendid:_id},
-	        dataType:'json',
-	        success:function(data){
-                            alert(data.data);
-                            window.location.reload();
-	        },
-                error:function(msg){
-                   console.log(msg.statusText);
-                }
-	    }); 
-}

@@ -51,7 +51,7 @@
     ));
     ?>
     <?php
-    echo $this->renderPartial('_friends', array(
+    echo $this->renderPartial('//friend/friend/_friends', array(
         'prefriends' => $prefriends
     ));
     ?>
@@ -127,6 +127,3 @@ echo "
 </script>
 ";
 ?>
-<script>
-    setInterval("newnoteajax()",5000);
-    </script>
