@@ -3,10 +3,6 @@
 </div>
 <?php
         $clientScript = Yii::app()->ClientScript;
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap.min.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap-responsive.min.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/awesome.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/SLideShow.css');
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery-1.11.0.min.js' );
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/bootstrap.min.js' );
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery-ui-1.10.4.min.js' );

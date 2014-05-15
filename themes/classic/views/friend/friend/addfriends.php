@@ -4,7 +4,9 @@
                 <div class="thumbnail friends pull-left sefriend">
                     <img src="<?php echo Yii::app()->theme->baseUrl . '/images/uploads/'.(isset($sefriend['headphoto']) ? $sefriend['headphoto']: 'head.jpeg'); ?>" class="img-polaroid pull-left recommend">
                     <blockquote>
-                        <strong><?php echo isset($sefriend['username']) ? $sefriend['username']:''; ?></strong>
+                        <a href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$sefriend['userid']); ?>">
+                            <strong><?php echo isset($sefriend['username']) ? $sefriend['username']:''; ?></strong>
+                        </a>
                         <small><?php echo isset($sefriend['college']) ? $sefriend['college'] : ''; ?></small>
                         <small><?php echo isset($sefriend['company']) ? $sefriend['company'] : ''; ?></small>
                         <a class="addFriend" data-id="<?php echo isset($sefriend['userid'])?$sefriend['userid'] : '0'; ?>">
@@ -19,7 +21,7 @@
             echo '<div>没有搜到好友</div>';
         }
         ?>
-<?php endif; ?>
+    <?php endif; ?>
 </div>
 <div class="pull-left well">
     <legend>筛选条件</legend>

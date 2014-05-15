@@ -8,11 +8,11 @@
             <div class="heiyou">
                 <img style ="margin-left:10px;margin-bottom:10px"src="<?php echo Yii::app()->theme->baseUrl . '/images/uploads/' . (isset($prefriend['headphoto'])?$prefriend['headphoto']:'head.jpeg'); ?>" class="img-polaroid pull-left recommend">
                 <blockquote>
-                    <strong><?php echo isset($prefriend['username'])?$prefriend['username']:''; ?></strong>
+                    <a href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$prefriend['userid']); ?>"><strong><?php echo isset($prefriend['username'])?$prefriend['username']:''; ?></strong></a>
                     <small><?php echo isset($prefriend['college'])?$prefriend['college']:''; ?></small>
                     <br/>
                     <small><?php echo isset($prefriend['company'])?$prefriend['company']:''; ?></small>
-                    <a class="addFriend" data-id =<?php echo isset($prefriend['userid'])?$prefriend['userid'] : '0'; ?>" >
+                    <a onclick="addfriend(<?php echo $prefriend['userid']; ?>)">
                         <i class="icon-plus"></i>
                         加为嘿友
                     </a>

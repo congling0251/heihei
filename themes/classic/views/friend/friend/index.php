@@ -6,7 +6,7 @@
 <div class="left">
     <?php
     echo $this->renderPartial(
-            '_userinfo', array(
+            '//homePage/_userinfo', array(
         'model' => $model
             )
     );

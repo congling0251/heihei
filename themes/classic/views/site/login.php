@@ -17,14 +17,14 @@ $clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/js/login.js');
      <form action="/heihei/site/login" method="post">
         <fieldset>
             <legend>登录</legend>
-            <label>用户名</label>
+            <label>用户邮箱</label>
             <input name="LoginForm[username]" type="text" placeholder="用户名">
             <label>密码</label>
             <input name="LoginForm[password]" type="password" placeholder="请输入密码">
             <label class="checkbox">
             <input name="LoginForm[rememberMe]" type="checkbox">下次自动登录</label>
-            <button type="submit" class="btn linebox" style="margin: 25px;">登录</button>
-            <a  class="btn linebox"id="register_button"  style="margin: 25px;">注册</a>
+            <button type="submit" class="btn linebox margin_25">登录</button>
+            <a  class="btn linebox margin_25" id="register_button"  href="/heihei/site/register">注册</a>
         </fieldset>
     </form>
 </div>
@@ -48,10 +48,3 @@ echo '您输入的用户名或者密码错误，请重新输入！';
 $this->endWidget('zii.widgets.jui.CJuiDialog');
 }
 ?>
-<script type="text/javascript">
-;( function ( $ ){
-    $("#register_button").click(function(){
-    	window.location.href="/heihei/site/register";
-     });
-})( jQuery );
-</script>

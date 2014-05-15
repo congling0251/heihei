@@ -129,12 +129,12 @@ class SiteController extends Controller
 		// if it is ajax validation request
 		if(isset($_POST['email']))
 		{
-                    if($model->getemail($_POST['email'])>0) {
+                    if($model->getusername($_POST['email'])>0) {
                         $this->render('register',array('model'=>$model,'error'=>true));
                         exit();
                     }
-                    $model->email = $_POST['email'];
-                    $model->username = $_POST['username'];
+                    $model->username = $_POST['email'];
+                    $model->realname = $_POST['realname'];
                     $model->password = md5($_POST['password']);
                     $model->sex = $_POST['sex'];
                     $rs = $model->save(false);

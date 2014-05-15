@@ -17,9 +17,9 @@
 		<?php echo $form->error($model,'username'); ?>
 	</div>
 	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email'); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($model,'realname'); ?>
+		<?php echo $form->textField($model,'realname'); ?>
+		<?php echo $form->error($model,'realname'); ?>
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'sex'); ?>
@@ -45,7 +45,7 @@
 		<?php echo $form->labelEx($model,'headphoto'); ?>
 		<?php echo $form->FileField($model,'headphoto'); ?>
 		<?php echo $form->error($model,'headphoto'); ?>
-                <?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto); ?>
+        <?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto); ?>
 	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('修改'); ?>

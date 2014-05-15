@@ -5,10 +5,10 @@
  *
  * The followings are the available columns in table 'hh_users':
  * @property integer $userid
- * @property string $email
+ * @property string $realname
  * @property string $password
  * @property string $username
- * @property string $layout
+ * @property set $layout
  * @property string $headphoto
  * @property string $sex
  * @property integer $age
@@ -45,15 +45,14 @@ class HhUsers extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('age, visitors_amount', 'numerical', 'integerOnly'=>true),
-			array('email, layout, headphoto, college, company', 'length', 'max'=>255),
+			array('username, layout, headphoto, college, company', 'length', 'max'=>255),
 			array('password, username', 'length', 'max'=>50),
-                        array('email', 'email'),
-                        array('headphoto', 'file','on'=>'editUserInfo'),
-                        array('username,email,sex', 'required','on'=>'register,editUserInfo'),
+            array('headphoto', 'file','on'=>'editUserInfo'),
+            array('username,realname,sex', 'required','on'=>'register,editUserInfo'),
 			array('sex', 'length', 'max'=>6),
                        // The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('userid, email, password, username, layout, headphoto, sex, age, college, company, visitors_amount', 'safe', 'on'=>'search'),
+			array('userid, realname, password, username, layout, headphoto, sex, age, college, company, visitors_amount', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,7 +75,7 @@ class HhUsers extends CActiveRecord
 	{
 		return array(
 			'userid' => 'Userid',
-			'email' => '邮箱',
+			'realname' => '真实姓名',
 			'password' => '密码',
                         'newpassword' => '新密码',
                         'repassword' => '重复密码',
@@ -103,7 +102,7 @@ class HhUsers extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('userid',$this->userid);
-		$criteria->compare('email',$this->email,true);
+		$criteria->compare('realname',$this->realname,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('layout',$this->layout,true);
@@ -118,11 +117,11 @@ class HhUsers extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-        public function getemail($email){
+        public function getusername($username){
         $oCommand = Yii::app()->db->createCommand();
         $oCommand->select()
                  ->from($this->tableName())
-                 ->where('email="'.$email.'"' );
+                 ->where('username="'.$username.'"' );
         $rs = $oCommand->queryAll();
         return ($rs)?count($rs):0;
     }

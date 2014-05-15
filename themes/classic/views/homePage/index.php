@@ -1,48 +1,49 @@
-
 <div class="left">
-    <?php
-    echo $this->renderPartial(
-            '_userinfo', array(
-        'model' => $model,
-		'visitorflag'=>$visitorflag
-            )
-    );
+     <?php 
+        if ( strpos($layout, 'userinfo') > -1)
+            echo $this->renderPartial(
+                    '_userinfo', array(
+                        'model' => $model,
+                		'visitorflag'=>$visitorflag
+                    )
+            );
     ?>
-
-    <div id="userstatus" class="userstatus well">
-        <button class="close" name="close" onclick="closediv()">&times;</button>
-        <?php
-        $this->widget('zii.widgets.CListView', array(
-            'dataProvider' => $message,
-            'itemView' => '_messagelist',
-            'template' => "{items}\n{pager}",
-        ));
-        ?>
-    </div>
+    <?php if ( strpos($layout, 'userstatus') > -1): ?>
+        <div id="userstatus" class="userstatus well">
+            <button class="close" name="close" onclick="closediv()">&times;</button>
+            <?php
+            $this->widget('zii.widgets.CListView', array(
+                'dataProvider' => $message,
+                'itemView' => '_messagelist',
+                'template' => "{items}\n{pager}",
+            ));
+            ?>
+        </div>
+    <?php endif; ?>
 </div>
 <div class="middle">
-    <?php
-    echo $this->renderPartial('_message');
+    <?php if ( strpos($layout, 'usermessage') > -1)
+        echo $this->renderPartial('_message');
     ?>
     <div class="allmessages">
        
-	<a class="notes" id="newnote_show" href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$model->userid); ?>"></a>
-   <div id="myfriendmessage">
-            <?php
-    echo $this->renderPartial('_friendmessage', array(
-        'friendmessage' => $friendmessage
-    ));
-    ?> 
-       </div>
-            <div class="clearfix"></div>
+    	<a class="notes" id="newnote_show" href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$model->userid); ?>"></a>
+        <div id="myfriendmessage">
+            <?php if ( strpos($layout, 'usermessage') > -1)
+            echo $this->renderPartial('_friendmessage', array(
+                'friendmessage' => $friendmessage
+            ));
+            ?>
         </div>
+        <div class="clearfix"></div>
+    </div>
         <hr/>
         <ul class="pager">
             <li>
                 <a onclick="moremessage('<?php echo Yii::app()->createUrl('HomePage/moreFriendmessage'); ?>')">更多</a>
             </li>
         </ul>
-    </div>
+</div>
 <div class="right">
     <?php
     echo $this->renderPartial('_recentvisitor', array(

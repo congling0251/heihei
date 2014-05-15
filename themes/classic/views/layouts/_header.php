@@ -5,7 +5,6 @@
         $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap-responsive.min.css');
         $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/awesome.css');
         $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/SLideShow.css');
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,24 +18,27 @@
 			<div class="container">
 				<a class="brand" href="<?php echo Yii::app()->createUrl('HomePage/index'); ?>">嘿嘿</a>
 				<ul class="nav homebar">
-					<li class="active">
+					<li class="<?php echo $this->uniqueId=== 'homePage' ? 'active' :'' ;?>">
 						<a href="<?php echo Yii::app()->createUrl('HomePage/index'); ?>">个人主页</a>
 					</li>
-					<li class="">
+					<li class="<?php echo $this->uniqueId=== 'friend/friend'?'active':''; ?>">
 						<a href="<?php echo Yii::app()->createUrl('friend/friend/index'); ?>">嘿友</a>
 					</li>
-					<li class="dropdown" id ="setLauout">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-							设置 <b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a id="modifyui" tabindex="-1" onclick="showclosebutton()">删除模块</a>
-								<a id="addui" tabindex="-1" onclick="addui()">增加模块</a>
-								<a id="saveui" tabindex="-1" onclick="addsave()">保存界面</a>
-							</li>
-						</ul>
-					</li>
+				 	<?php if ( $this->uniqueId=== 'homePage'): ?>
+
+						<li class="dropdown" id ="setLayout">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								设置 <b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a id="modifyui" tabindex="-1" onclick="showclosebutton()">删除模块</a>
+									<a id="addui" tabindex="-1">增加模块</a>
+									<a id="saveui" tabindex="-1">保存界面</a>
+								</li>
+							</ul>
+						</li>
+				    <?php endif; ?>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 							帐号中心 <b class="caret"></b>
@@ -65,7 +67,3 @@
 			</div>
 		</div>
 	</div>
-    <script>
-    if(!('<?php echo $this->uniqueId;  ?>'==='homePage' ))
-        $("#setLauout").addClass("hide");
-    </script>

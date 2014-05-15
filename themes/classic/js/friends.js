@@ -19,7 +19,7 @@ $(function(){
 	    }); 
     });
     
-      $("#friendtabs").delegate("#detail_serchfriend","click",function(e){
+    $("#friendtabs").delegate("#detail_serchfriend","click",function(e){
         var _gender=$("#gender").val();
         var _school=$("#school").val();
         var _company=$("#company").val();

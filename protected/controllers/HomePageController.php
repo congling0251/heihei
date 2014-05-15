@@ -117,7 +117,7 @@ class HomePageController extends Controller {
     }
 
     private function getfriendmessage() {
-         $userid = Yii::app()->user->getState('userid');
+        $userid = Yii::app()->user->getState('userid');
         $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") order by t.message_date desc limit ".$this->limitTime;
         $result = yii::app()->db->createCommand($sql);
         $friendmessages = $result->queryAll();
