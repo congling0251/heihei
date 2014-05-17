@@ -1,7 +1,24 @@
 (function(window){
     var layouts = new Array("userinfo","userstatus","usermessage","visitor","heiyoupanel");
     var safeAjax = function(){
-
+        var _safeNumber;
+        return function(_url, _type, _data,_successFun){
+            _data.safeNumber = _safeNumber;
+            var _successFunciton = function(data){
+                _safeNumber = data.safeNumber;
+                _successFunciton();
+            }
+            $.ajax({
+                url: _url,
+                type:_type,
+                data :_data,
+                dataType:'json',
+                success:_successFunciton,
+                error:function(msg){
+                        alert(msg.statusText);
+                     }
+        });
+        }
     };
         //发送POST请求，保存修改后的界面
     var postMessage = function (str) { 
@@ -21,7 +38,7 @@
                      error:function(msg){
                         alert(msg.statusText);
                      }
-            }); 
+        }); 
     };
     var showclosebutton =function(){
         changebuttondisplay("block");
@@ -157,10 +174,13 @@
             }); 
     };
     $(function(){
+        $( "#friendtabs" ).tabs();
         $('#message_button').bind('click',message_submit);
         $('#modifyui').bind('click',showclosebutton);
         $('#addui').bind('click',addui);
         $('#saveui').bind('click',addsave);
+        $('.hh_layout').bind('click',closediv);
+        $('#layout_add_save').bind('click',addsave);
         $('#heiyoupanel').delegate('.addFriend','click',function(){
             var _id = $(this).attr('data-id');
             $.ajax({
@@ -209,13 +229,13 @@
                     }
             }); 
         });
-            $("#friendtabs").delegate("#name_serchfriend","click",function(e){
-        var _name=$("#newfriendname").val();
-        if(_name==""){
-            alert("姓名不能为空");
-            return;
-        }
-          $.ajax({
+        $("#friendtabs").delegate("#name_serchfriend","click",function(e){
+            var _name=$("#newfriendname").val();
+            if(_name==""){
+                alert("姓名不能为空");
+                return;
+            }
+            $.ajax({
             url: 'findfriend',
             type:"POST",
                 data:{name:_name},
@@ -226,31 +246,31 @@
                 error:function(msg){
                   alert("查找失败");
                 }
-        }); 
-    });
+            }); 
+        });
     
-    $("#friendtabs").delegate("#detail_serchfriend","click",function(e){
-        var _gender=$("#gender").val();
-        var _school=$("#school").val();
-        var _company=$("#company").val();
-        var _data={
-            company:_company,
-            gender:_gender,
-            school:_school
-        };
-          $.ajax({
-            url: 'findfriend',
-            type:"POST",
-                data:_data,
-            dataType:'html',
-            success:function(data){
-                            $("#addfriendsnager").empty().append(data);
-            },
-                error:function(msg){
-                  alert("查找失败");
-                }
-        }); 
-    });
+        $("#friendtabs").delegate("#detail_serchfriend","click",function(e){
+            var _gender=$("#gender").val();
+            var _school=$("#school").val();
+            var _company=$("#company").val();
+            var _data={
+                company:_company,
+                gender:_gender,
+                school:_school
+            };
+              $.ajax({
+                url: 'findfriend',
+                type:"POST",
+                    data:_data,
+                dataType:'html',
+                success:function(data){
+                                $("#addfriendsnager").empty().append(data);
+                },
+                    error:function(msg){
+                      alert("查找失败");
+                    }
+            }); 
+        });
         setInterval(newnoteajax(),5000);
     });
 })(window);

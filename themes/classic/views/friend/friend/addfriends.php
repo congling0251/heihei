@@ -5,7 +5,7 @@
                     <img src="<?php echo Yii::app()->theme->baseUrl . '/images/uploads/'.(isset($sefriend['headphoto']) ? $sefriend['headphoto']: 'head.jpeg'); ?>" class="img-polaroid pull-left recommend">
                     <blockquote>
                         <a href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$sefriend['userid']); ?>">
-                            <strong><?php echo isset($sefriend['username']) ? $sefriend['username']:''; ?></strong>
+                            <strong><?php echo isset($sefriend['realname']) ? $sefriend['realname']:''; ?></strong>
                         </a>
                         <small><?php echo isset($sefriend['college']) ? $sefriend['college'] : ''; ?></small>
                         <small><?php echo isset($sefriend['company']) ? $sefriend['company'] : ''; ?></small>

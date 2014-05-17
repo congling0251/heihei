@@ -5,10 +5,12 @@
                 <div class="thumbnail friends pull-left sefriend">
                     <img src="<?php echo Yii::app()->theme->baseUrl . '/images/uploads/'.(isset($myfriend->headphoto) ? $myfriend->headphoto : 'head.jpeg'); ?>" class="img-polaroid pull-left recommend">
                     <blockquote>
-                        <strong><?php echo isset($myfriend->username) ? $myfriend->username:''; ?></strong>
+                        <a href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$myfriend['userid']); ?>">
+                            <strong><?php echo isset($myfriend->realname) ? $myfriend->realname:''; ?></strong>
+                        </a>
                         <small><?php echo isset($myfriend->college) ? $myfriend->college : ''; ?></small>
                         <small><?php echo isset($myfriend->company) ? $myfriend->company : ''; ?></small>
-                        <a class="addFriend" data-id="<?php echo isset($myfriend->userid)?$myfriend->userid:''; ?>">
+                        <a class="deleteFriend" data-id="<?php echo isset($myfriend->userid)?$myfriend->userid:''; ?>">
                             <i class="icon-plus"></i>
                             删除嘿友
                         </a>

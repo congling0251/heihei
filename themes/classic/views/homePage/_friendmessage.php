@@ -10,7 +10,7 @@
           <?php echo $message['message']; ?>
         </p>
         <div class="messageinfo pull-left">
-            <a href="#"><?php echo date('F j, Y \a\t h:i a',$message['message_date']); ?></a>
+            <a href="#"><?php echo date('Y年n月j日 h时i分s秒',$message['message_date']); ?></a>
             <div class="pull-right">
                 <a>转发(<?php echo ($message['forward_amount']==0)?0:$message['forward_amount']; ?>)</a>
                 <i class="S_txt3">|</i>

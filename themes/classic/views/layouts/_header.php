@@ -1,11 +1,3 @@
-<?php
-        $clientScript = Yii::app()->ClientScript;
-		$clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/jquery-ui-1.10.4.min.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap.min.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap-responsive.min.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/awesome.css');
-        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/SLideShow.css');
-?>
 <!DOCTYPE html>
 <html>
 <head>

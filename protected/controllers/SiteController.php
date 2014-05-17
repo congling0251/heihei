@@ -18,6 +18,7 @@ class SiteController extends Controller
                     'Captcha',
                     'Error',
                     'Login',
+                    'Register'
                 ),
                 'users' => array('*'),
             ),
@@ -103,43 +104,45 @@ class SiteController extends Controller
              //   $this->layout="login";
                // $this->render('login');
 		$model=new LoginForm;
-                if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+        if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 		// collect user input data
-		if(isset($_POST['LoginForm']))
+		if(isset($_POST['LoginForm']) && $_POST['LoginForm']['username'] )
 		{
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
 				$this->redirect(Yii::app()->user->returnUrl);
-                        else
-                            $this->render('login',array('model'=>$model,'error'=>true));
-                            exit();
+            else
+                $this->render('login',array('model'=>$model,'error'=>true));
+                exit();
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model,'error'=>false));
 	}
 	public function actionRegister()
-            {
+        {
 		$model=new HhUsers();
 
 		// if it is ajax validation request
-		if(isset($_POST['email']))
+		if(isset($_POST['email']) && $_POST['email']!=null)
 		{
-                    if($model->getusername($_POST['email'])>0) {
-                        $this->render('register',array('model'=>$model,'error'=>true));
-                        exit();
-                    }
-                    $model->username = $_POST['email'];
-                    $model->realname = $_POST['realname'];
-                    $model->password = md5($_POST['password']);
-                    $model->sex = $_POST['sex'];
-                    $rs = $model->save(false);
-                    if($rs)
-                        $this->redirect('login');
+            if($model->getusername($_POST['email'])>0) {
+                $this->render('register',array('model'=>$model,'error'=>true));
+                exit();
+            }
+            $model->username = $_POST['email'];
+            $model->realname = $_POST['realname'];
+            $model->password = md5($_POST['password']);
+            $model->sex = $_POST['sex'];
+            $rs = $model->save(false);
+            echo $rs;
+            exit();
+            if($rs)
+                $this->redirect('login');
 		}
 		$this->render('register',array('model'=>$model,'error'=>false));
 	}

@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="time">
-		<?php echo date('F j, Y \a\t h:i a',$comment->create_time); ?>
+		<?php echo date('Y年n月j日 h时i分s秒',$comment->create_time); ?>
 	</div>
 
 	<div class="content">

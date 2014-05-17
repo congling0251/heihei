@@ -113,7 +113,6 @@ body{
 /*关注，粉丝，等级*/
 .stat{
 	float: left;
-	padding-top: 10px;
 	padding-left: 3px;
 }
 /*用户状态*/
@@ -301,6 +300,9 @@ textarea{
 .editinfo_form img{
     width: 100px;
     height: 100px;
+}
+.margin_5{
+	margin: 5px
 }
 .margin_25{
 	margin: 25px

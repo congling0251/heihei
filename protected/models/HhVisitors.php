@@ -56,7 +56,7 @@ class HhVisitors extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::BELONGS_TO, 'HhUsers', 'userid'),
-                        'visitor' => array(self::BELONGS_TO, 'HhUsers','', 'on'=>' t.visitid=visitor.userid')
+            'visitor' => array(self::BELONGS_TO, 'HhUsers','', 'on'=>' t.visitid=visitor.userid')
 		);
 	}
 

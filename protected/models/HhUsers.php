@@ -47,7 +47,10 @@ class HhUsers extends CActiveRecord
 			array('age, visitors_amount', 'numerical', 'integerOnly'=>true),
 			array('username, layout, headphoto, college, company', 'length', 'max'=>255),
 			array('password, username', 'length', 'max'=>50),
-            array('headphoto', 'file','on'=>'editUserInfo'),
+            array('headphoto', 'file','allowEmpty'=>true,   
+                'types'=>'jpg,png,gif',   //上传文件的类型  
+                'maxSize'=>1024*1024*10,    //上传大小限制，注意不是php.ini中的上传文件大小  
+                'tooLarge'=>'文件大于10M，上传失败！请上传小于10M的文件！',  'on'=>'editUserInfo'),
             array('username,realname,sex', 'required','on'=>'register,editUserInfo'),
 			array('sex', 'length', 'max'=>6),
                        // The following rule is used by search().
@@ -75,10 +78,10 @@ class HhUsers extends CActiveRecord
 	{
 		return array(
 			'userid' => 'Userid',
-			'realname' => '真实姓名',
+			'realname' => '姓名',
 			'password' => '密码',
-                        'newpassword' => '新密码',
-                        'repassword' => '重复密码',
+            'newpassword' => '新密码',
+            'repassword' => '重复密码',
 			'username' => '用户名',
 			'layout' => '布局',
 			'headphoto' => '头像',

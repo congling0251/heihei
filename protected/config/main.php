@@ -32,10 +32,10 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-                 'friend'=>array(
-                     'layout'=>'index',
-                 ),
-                 'homePage',
+        'friend'=>array(
+            'layout'=>'index',
+        ),
+        'homePage',
 	),
 
 	// application components
@@ -43,14 +43,14 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
-                        'loginUrl'=>array('site/login'),
-	                'class' => 'RWebUser'
+            'loginUrl'=>array('site/login'),
+            'class' => 'RWebUser'
 		),
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-                         'showScriptName' => false,
-	                'appendParams' => false,
+            'showScriptName' => false,
+            'appendParams' => false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',

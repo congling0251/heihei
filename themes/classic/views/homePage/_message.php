@@ -1,5 +1,5 @@
     <div id="usermessage" class="message">
-        <button class="close" name="close" onclick="closediv()">&times;</button>
+        <button class="hh_layout close" name="close">&times;</button>
         <legend>
             <small>写点什么吧。</small>
         </legend>

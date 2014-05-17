@@ -7,6 +7,6 @@
 		</strong>
 	</p>
 	<small>
-		<?php echo date('F j, Y \a\t h:i a',$data->message_date); ?>
+		<?php echo date('Y年n月j日 h时i分s秒',$data->message_date); ?>
 	</small>
 </blockquote>

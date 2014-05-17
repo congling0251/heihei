@@ -10,7 +10,7 @@
     ?>
     <?php if ( strpos($layout, 'userstatus') > -1): ?>
         <div id="userstatus" class="userstatus well">
-            <button class="close" name="close" onclick="closediv()">&times;</button>
+            <button class="hh_layout close" name="close">&times;</button>
             <?php
             $this->widget('zii.widgets.CListView', array(
                 'dataProvider' => $message,
@@ -83,7 +83,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-        <button class="btn btn-primary" onclick="addsave()">确定</button>
+        <button class="btn btn-primary" id="layout_add_save">确定</button>
     </div>
 </div>
 <div id="saveok" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

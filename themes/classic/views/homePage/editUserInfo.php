@@ -45,7 +45,15 @@
 		<?php echo $form->labelEx($model,'headphoto'); ?>
 		<?php echo $form->FileField($model,'headphoto'); ?>
 		<?php echo $form->error($model,'headphoto'); ?>
-        <?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto); ?>
+		<div class='row'>
+			<div class="col-md-6">
+	        	<?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto); ?>
+			</div>
+			<div class="col-md-6">
+	        	<label>请选择jpg,png或者gif类型的图片，大小不超过10M</label>
+			</div>
+
+    	</div>
 	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('修改'); ?>

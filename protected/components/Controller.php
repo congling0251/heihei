@@ -20,16 +20,20 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
-        
-    public function accessRules()
-    {
-        return array(
-            array('allow', // allow authenticated users to access all actions
-                'actions'=>array('help', 'create', 'delete', 'list', 'update', 'index', 'view','pages'),
-                'users'=>array('@'),
-            )
-        );
-    }
+    public function init(){
+        $clientScript = Yii::app()->ClientScript;
+        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/jquery-ui-1.10.4.min.css');
+        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap.min.css');
+        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/bootstrap-responsive.min.css');
+        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/awesome.css');
+        $clientScript -> registerCssFile(Yii::app() -> theme -> baseUrl . '/css/SLideShow.css');
+        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery-1.11.0.min.js' );
+        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/bootstrap.min.js' );
+        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery-ui-1.10.4.min.js' );
+        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery.ui.core.js' );
+
+        parent::init();
+    }    
     public function ajaxOutputJSON($result = 1, $msg = '', $data = array())
     {
         echo CJSON::encode(array(
@@ -39,5 +43,15 @@ class Controller extends CController
                 )
                 );
         Yii::app()->end();
+    }
+    public function beforeAction($action)
+    {
+        $extraActions = array('login', 'register');
+        if (!in_array(strtolower($action->id), $extraActions) && Yii::app()->user->isGuest)
+        {
+            Yii::app()->user->loginRequired();
+        }
+
+        return true;
     }
 }

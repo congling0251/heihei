@@ -8,7 +8,7 @@
           <?php echo $model->message; ?>
         </p>
         <div class="messageinfo pull-left">
-            <a href="#"><?php echo date('F j, Y \a\t h:i a',$model->message_date); ?></a>
+            <a href="#"><?php echo date('Y年n月j日 h时i分s秒',$model->message_date); ?></a>
             <div class="pull-right">
                 <a onclick="forwardmessge()">转发(<?php echo ($model->forward_amount==0)?0:$model->forward_amount; ?>)</a>
                 <i class="S_txt3">|</i>

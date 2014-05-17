@@ -42,18 +42,3 @@
     ?>
  </div>
 </div>
-<script>
-$(document).ready(function(){
-	var _ajax =function(_url){
-		$.ajax({
-		url: _url,
-		type:"POST",
-		dataType:'html',
-		success:function(data){
-					_showData(data);
-				}
-		});
-	};
-    $( "#friendtabs" ).tabs();
-});
-</script>

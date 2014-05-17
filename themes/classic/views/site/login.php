@@ -18,9 +18,9 @@ $clientScript->registerScriptFile(Yii::app()->theme->baseUrl . '/js/login.js');
         <fieldset>
             <legend>登录</legend>
             <label>用户邮箱</label>
-            <input name="LoginForm[username]" type="text" placeholder="用户名">
+            <input name="LoginForm[username]" type="email" placeholder="用户名" required>
             <label>密码</label>
-            <input name="LoginForm[password]" type="password" placeholder="请输入密码">
+            <input name="LoginForm[password]" type="password" placeholder="请输入密码" required>
             <label class="checkbox">
             <input name="LoginForm[rememberMe]" type="checkbox">下次自动登录</label>
             <button type="submit" class="btn linebox margin_25">登录</button>
@@ -47,4 +47,5 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 echo '您输入的用户名或者密码错误，请重新输入！';
 $this->endWidget('zii.widgets.jui.CJuiDialog');
 }
+echo $error;
 ?>
