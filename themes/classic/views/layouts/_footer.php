@@ -3,7 +3,6 @@
 </div>
 <?php
         $clientScript = Yii::app()->ClientScript;
-        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/home.js' );
-        $clientScript -> registerScriptFile(Yii::app() -> theme -> baseUrl . '/js/friends.js');
+        $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/home.js' ,CClientScript::POS_END);
 
 ?>

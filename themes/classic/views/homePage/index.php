@@ -11,13 +11,14 @@
     <?php if ( strpos($layout, 'userstatus') > -1): ?>
         <div id="userstatus" class="userstatus well">
             <button class="hh_layout close" name="close">&times;</button>
+            <div id="heiMessageList">
             <?php
-            $this->widget('zii.widgets.CListView', array(
-                'dataProvider' => $message,
-                'itemView' => '_messagelist',
-                'template' => "{items}\n{pager}",
-            ));
+                echo $this->renderPartial('_messagelist', array(
+                        'messages' => $message
+                    ));
             ?>
+            </div>
+
         </div>
     <?php endif; ?>
 </div>
@@ -27,12 +28,15 @@
     ?>
     <div class="allmessages">
        
-    	<a class="notes" id="newnote_show" href="<?php echo Yii::app()->createUrl('HomePage/index?id='.$model->userid); ?>"></a>
+    	<a class="notes" id="newnote_show"></a>
         <div id="myfriendmessage">
             <?php if ( strpos($layout, 'usermessage') > -1)
-            echo $this->renderPartial('_friendmessage', array(
-                'friendmessage' => $friendmessage
-            ));
+                if(count($friendmessage)!=0)
+                    echo $this->renderPartial('_friendmessage', array(
+                        'friendmessage' => $friendmessage
+                    ));
+                else
+                    echo "<div>目前没有新动态</div>";
             ?>
         </div>
         <div class="clearfix"></div>
@@ -40,7 +44,7 @@
         <hr/>
         <ul class="pager">
             <li>
-                <a onclick="moremessage('<?php echo Yii::app()->createUrl('HomePage/moreFriendmessage'); ?>')">更多</a>
+                <a id ="moressageButton">更多</a>
             </li>
         </ul>
 </div>

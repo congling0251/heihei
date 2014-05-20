@@ -31,17 +31,19 @@ class Controller extends CController
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/bootstrap.min.js' );
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery-ui-1.10.4.min.js' );
         $clientScript -> registerScriptFile( Yii::app() -> theme -> baseUrl . '/js/jquery.ui.core.js' );
-
+        $clientScript -> registerScript('safeNumberInit', "var serverSafeNumber = '".Yii::app()->user->getState('safeNumber')."',lastTime='".time()."';",CClientScript::POS_HEAD);
         parent::init();
     }    
     public function ajaxOutputJSON($result = 1, $msg = '', $data = array())
     {
+        Yii::app()->user->setState('safeNumber',md5(Yii::app()->user->getState('safeNumber')));
         echo CJSON::encode(array(
-                    'result' => $result,
-                    'msg' => $msg,
-                    'data'=> $data
-                )
-                );
+                'result' => $result,
+                'msg' => $msg,
+                'data'=> $data,
+                'safeNumber'=>Yii::app()->user->getState('safeNumber')
+            )
+        );
         Yii::app()->end();
     }
     public function beforeAction($action)
@@ -51,7 +53,14 @@ class Controller extends CController
         {
             Yii::app()->user->loginRequired();
         }
-
-        return true;
+        $request = Yii::app()->getRequest();
+        if($request->isAjaxRequest){            
+            if(Yii::app()->user->getState('safeNumber')===$_POST['safeNumber'] && Yii::app()->user->getState('loginIp') ===$request->userHostAddress){
+                return true;   
+            }else{
+                return false;
+            }
+        }
+        return true;   
     }
 }

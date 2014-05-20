@@ -46,6 +46,9 @@ return array(
             'loginUrl'=>array('site/login'),
             'class' => 'RWebUser'
 		),
+		//'request'=>array(
+        //    'enableCsrfValidation'=>true,
+       // ),
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
@@ -91,7 +94,7 @@ return array(
 			),
 		),
 	),
-
+	'timeZone'=>'Asia/Shanghai',
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(

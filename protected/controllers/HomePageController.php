@@ -3,7 +3,7 @@
 class HomePageController extends Controller {
 
     public $layout = 'index';
-    public $limitTime = 2;
+    public $limitTime = 5;
     public function accessRules()
     {
         return array(
@@ -47,7 +47,7 @@ class HomePageController extends Controller {
             $layout = "userinfo,userstatus,visitor,";
             $lastVisitor = $this->getLasetVisitor($id);
             $model = HhUsers::model()->findByPk($id);
-            if($lastVisitor->visitid!==$userid || floor($lastVisitor->visitors_date/86400) != floor(time()/86400) ){
+            if(!$lastVisitor || $lastVisitor->visitid!==$userid || floor($lastVisitor->visitors_date/86400) != floor(time()/86400) ){
                 $transaction = $model->dbConnection->beginTransaction();
                 try {
                     $model->visitors_amount = $model->visitors_amount + 1;
@@ -108,16 +108,22 @@ class HomePageController extends Controller {
 
     public function actionsavemessage() {
         $userid = Yii::app()->user->getState('userid');
+        $nowTime = time();
         $model = new HhMessages();
         $model->userid = $userid;
         $model->message = $_POST['message'];
-        $model->message_date = time();
+        $model->message_date = $nowTime;
         if ($model->save()) {
-            $this->ajaxOutputJSON(1, 'succsess', '状态发布成功！');
+            $nowMessage = HhMessages::model()->model()->findAll(array(
+                'condition'=>'userid=:userId and message_date=:nowDate',
+                'params'=>array(':userId'=>$userid,'nowDate'=>$nowTime),
+            ));
+            $messageContent =  $this->renderPartial('_messagelist', array(
+                        'messages' => $nowMessage
+                    ),true);
+            $this->ajaxOutputJSON(1, '状态发布成功！',array('content' =>$messageContent ));
         } else {
-            print_r($model->errors);
-            die;
-            $this->ajaxOutputJSON(0, 'fail', '状态发布失败！');
+            $this->ajaxOutputJSON(0, '状态发布失败！');
         }
     }
 
@@ -139,25 +145,29 @@ class HomePageController extends Controller {
     }
 
     public function actionnewnoteajax() {
-        $userid = Yii::app()->user->getState('userid');
-        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") and t.message_date> ".time();
-        $result = yii::app()->db->createCommand($sql);
-        $friendmessages = $result->queryAll();
-        $nowTime = time();
-        $this->ajaxOutputJSON(1, 'success', array('num'=>count($friendmessages),'time'=>$nowTime));
+        $count = count($this->getNewMessages($_POST['lastTime']));
+        $this->ajaxOutputJSON(1, 'success', array('num'=>$count));
     }
 
     public function actionmoreFriendmessage() {
         $this->limitTime = $this->limitTime + 10;
         $friendmessage = $this->getfriendmessage();
-         $this->renderPartial('_friendmessage', array(
+        $this->renderPartial('_friendmessage', array(
         'friendmessage' => $friendmessage
     ));
     }
     public function actionmessage($messageid='') {
-            $model = HhMessages::model()->with('comments','user')->findByPk($messageid);
-            $this->render('messagedetail',array('model'=>$model));
+        $model = HhMessages::model()->with('comments','user')->findByPk($messageid);
+        $this->render('messagedetail',array('model'=>$model));
     }
+    public function actionshowNewMessage($messageid='') {
+        $newMessages = $this->getNewMessages($_POST['lastTime']);
+        $messageContent = $this->renderPartial('_friendmessage', array(
+                            'friendmessage' => $newMessages
+                        ),true);
+        $this->ajaxOutputJSON(1, 'success', array('time'=>time(),'num'=>count($newMessages),'data'=> $messageContent));
+    }
+    
     private function getfriendmessage() {
         $userid = Yii::app()->user->getState('userid');
         $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") order by t.message_date desc limit ".$this->limitTime;
@@ -172,19 +182,21 @@ class HomePageController extends Controller {
         $friends = $result->queryAll();
         return $friends;
     }
+    private function getNewMessages($lastTime ){
+        $userid = Yii::app()->user->getState('userid');
+        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") and t.message_date> ".$lastTime;
+        $result = yii::app()->db->createCommand($sql);
+        $newMessages = $result->queryAll();
+        return $newMessages;
+    }
     private function getmessages() {
         $userid = Yii::app()->user->getState('userid');
         $criteria = new CDbCriteria();
 
         $criteria->condition = 'userid=' . $userid;
-        $criteria->limit = $this->limitTime;
+        $criteria->limit = 5;
         $criteria->order = 'message_date DESC';
-        $messages = new CActiveDataProvider('HhMessages', array(
-            'pagination' => array(
-                'pageSize' => 5,
-            ),
-            'criteria' => $criteria,
-        ));
+        $messages = HhMessages::model()->findAll($criteria);
         return $messages;
     }
 
@@ -201,7 +213,7 @@ class HomePageController extends Controller {
         $criteria = new CDbCriteria();
 
         $criteria->condition = 't.userid=' . $id;
-        $criteria->limit = 6;
+        $criteria->limit = 1;
         $criteria->order = 'visitors_date DESC';
         $LasetVisitor = HhVisitors::model()->with('visitor')->find($criteria);
         return $LasetVisitor;

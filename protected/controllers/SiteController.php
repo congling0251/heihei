@@ -139,8 +139,6 @@ class SiteController extends Controller
             $model->password = md5($_POST['password']);
             $model->sex = $_POST['sex'];
             $rs = $model->save(false);
-            echo $rs;
-            exit();
             if($rs)
                 $this->redirect('login');
 		}

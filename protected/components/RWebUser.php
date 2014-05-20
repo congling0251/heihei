@@ -3,7 +3,6 @@
 class RWebUser extends CWebUser
 {
     public $_access=array();
-
     public function loginRequired()
     {
         $app = Yii::app();
@@ -15,6 +14,9 @@ class RWebUser extends CWebUser
                 $url=$app->createUrl($route,array_splice($url,1));
             }
             if ( $request->isAjaxRequest ){
+                if($this->safeNumber===$_POST['safeNumber'] && $this->loginIp ===$request->userHostAddress ){
+                    
+                }
                 //$this->renderPartial('application.views.main.sessionTimeout', array(), false, true);
 //                echo "This output is never given to the client...";
 

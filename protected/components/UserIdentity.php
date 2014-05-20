@@ -32,7 +32,8 @@ class UserIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_NONE;
             $this->setState('username', $user->username);
             $this->setState('userid', $user->userid);
-            
+            $this->setState('safeNumber',md5(time()));
+            $this->setState('loginIp',Yii::app()->request->userHostAddress);
         }
         return $this->errorCode;
 	}
