@@ -4,7 +4,9 @@
             echo $this->renderPartial(
                     '_userinfo', array(
                         'model' => $model,
-                		'visitorflag'=>$visitorflag
+                		'visitorflag'=>$visitorflag,
+                        'myfriendNum' =>$myFriendNum,
+                        'befriendNum'=>$beFriendNum
                     )
             );
     ?>
@@ -41,7 +43,6 @@
         </div>
         <div class="clearfix"></div>
     </div>
-        <hr/>
         <ul class="pager">
             <li>
                 <a id ="moressageButton">更多</a>

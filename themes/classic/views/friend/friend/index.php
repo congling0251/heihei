@@ -7,7 +7,9 @@
     <?php
     echo $this->renderPartial(
             '//homePage/_userinfo', array(
-        'model' => $model
+                'model' => $model,
+                'myfriendNum' =>$myFriendNum,
+                'befriendNum'=>$beFriendNum
             )
     );
     ?>
@@ -19,11 +21,11 @@
 </div>
 <div id="friendtabs" class="big-right">
 	<ul>
-		<li><a>好友</a></li>
 		<li><a href="#addfriends">添加好友</a></li>
 		<li><a href="#manager">好友管理</a></li>
+        <li><a href="#bemanager">粉丝管理</a></li>
 	</ul>
-  <div id="addfriends">
+    <div id="addfriends">
       <?php
     echo $this->renderPartial(
             'addfriends', array(
@@ -31,8 +33,8 @@
             )
     );
     ?>
- </div>
-  <div id="manager">
+    </div>
+    <div id="manager">
      <?php
     echo $this->renderPartial(
             'manager', array(
@@ -40,5 +42,14 @@
             )
     );
     ?>
- </div>
+    </div>
+    <div id="bemanager">
+     <?php
+    echo $this->renderPartial(
+            'bemanager', array(
+            'befriends' => $befriends
+            )
+    );
+    ?>
+    </div>
 </div>

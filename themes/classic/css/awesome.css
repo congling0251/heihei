@@ -271,7 +271,9 @@ textarea{
 	max-width: 480px;
 	cursor: pointer;
 }
-
+.pointer{
+		cursor: pointer;
+}
 /*关闭按钮*/
 .close{
 	position: absolute;

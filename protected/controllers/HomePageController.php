@@ -67,9 +67,38 @@ class HomePageController extends Controller {
         $friendmessage = $this->getfriendmessage();
         $message = $this->getmessages();
         $recentvisitors = $this->getrecentvisitors($id);
-        $this->render('index', array('model' => $model, 'visitorflag' => $visitorflag, 'layout' => $layout, 'message' => $message, 'recentvisitors' => $recentvisitors, 'prefriends' => $prefriends, 'friendmessage' => $friendmessage));
+        $this->render('index', array('model' => $model,'beFriendNum'=>$this->getbeFriendNum($userid),'myFriendNum'=>$this->getmyFriendNum($userid), 'visitorflag' => $visitorflag, 'layout' => $layout, 'message' => $message, 'recentvisitors' => $recentvisitors, 'prefriends' => $prefriends, 'friendmessage' => $friendmessage));
     }
+    public function actioncomment(){
+        $comment = $this->getComments($_POST['message_id']);
+        $content =  $this->renderPartial('_comments', array(
+                        'comments' => $comment
+                    ),true);
+        $this->ajaxOutputJSON(1, 'succsess',array('content' =>$content ));
+    }
+    public function actioncommentSubmit(){
+        $userid = Yii::app()->user->getState('userid');
+        $nowTime = time();
+        $model = new HhComment();
+        $model->userid = $userid;
+        $model->comment = $_POST['content'];
+        $model->comment_date = $nowTime;
+        $model->messageid = $_POST['message_id'];
 
+        if ($model->save()) {
+            $message = HhMessages::model()->findByPk($_POST['message_id']);
+            $message->comment_amount = $message->comment_amount+1;
+            $message->save();
+            $comment = $this->getComments($_POST['message_id']);
+            $content =  $this->renderPartial('_comments', array(
+                    'comments' => $comment
+                ),true);
+            $this->ajaxOutputJSON(1, '评论发布成功！',array('num'=>count($comment),'content' =>$content )); 
+
+        } else {
+            $this->ajaxOutputJSON(0, '评论发布失败！');
+        }
+    }
     public function actionEditUserInfo() {
         $userid = Yii::app()->user->getState('userid');
         $model = HhUsers::model()->findByPk($userid);
@@ -114,7 +143,7 @@ class HomePageController extends Controller {
         $model->message = $_POST['message'];
         $model->message_date = $nowTime;
         if ($model->save()) {
-            $nowMessage = HhMessages::model()->model()->findAll(array(
+            $nowMessage = HhMessages::model()->findAll(array(
                 'condition'=>'userid=:userId and message_date=:nowDate',
                 'params'=>array(':userId'=>$userid,'nowDate'=>$nowTime),
             ));
@@ -157,7 +186,7 @@ class HomePageController extends Controller {
     ));
     }
     public function actionmessage($messageid='') {
-        $model = HhMessages::model()->with('comments','user')->findByPk($messageid);
+        $model = HhMessages::model()->with('user')->findByPk($messageid);
         $this->render('messagedetail',array('model'=>$model));
     }
     public function actionshowNewMessage($messageid='') {
@@ -170,7 +199,7 @@ class HomePageController extends Controller {
     
     private function getfriendmessage() {
         $userid = Yii::app()->user->getState('userid');
-        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") order by t.message_date desc limit ".$this->limitTime;
+        $sql = "select * from Hh_Messages as t,Hh_Users as u where t.userid = u.userid and t.userid in (select friendid from Hh_Friends as f where f.userid =".$userid.") or t.userid=".$userid." order by t.message_date desc limit ".$this->limitTime;
         $result = yii::app()->db->createCommand($sql);
         $friendmessages = $result->queryAll();
         return $friendmessages;
@@ -218,5 +247,27 @@ class HomePageController extends Controller {
         $LasetVisitor = HhVisitors::model()->with('visitor')->find($criteria);
         return $LasetVisitor;
     }
-
+    private function getmyFriendNum($id){
+        $userid = Yii::app()->user->getState('userid');
+        $myFriend = HhFriends::model()->findAll(array(
+            'condition'=>'userid=:userId',
+            'params'=>array(':userId'=>$userid),
+        ));
+        return count($myFriend);
+    }
+    private function getbeFriendNum($id){
+        $userid = Yii::app()->user->getState('userid');
+        $beFriend = HhFriends::model()->findAll(array(
+            'condition'=>'friendid=:userId',
+            'params'=>array(':userId'=>$userid),
+        ));
+        return count($beFriend);
+    }
+    private function getComments($id){
+        $comments = HhComment::model()->with('user')->findAll(array(
+            'condition'=>'messageid=:messageId',
+            'params'=>array(':messageId'=>$id),
+        ));
+        return $comments;
+    }
 }

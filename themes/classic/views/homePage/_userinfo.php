@@ -18,9 +18,7 @@
         </span>
         <div class="stat">
             <hr/>
-            <a class="lbox" href="javascript:void(0);">关注(8)</a>
-            <a class="lbox" href="#">粉丝(2)</a>
-            <a class="lbox" href="<?php echo Yii::app()->createUrl('friend/friend'); ?>">好友</a>
-            <a class="lbox" href="#">等级(1)</a>
+            <a class="lbox" href="javascript:void(0);">关注(<?php echo $myfriendNum; ?>)</a>
+            <a class="lbox" href="#">粉丝(<?php echo $befriendNum; ?>)</a>
         </div>
     </div>

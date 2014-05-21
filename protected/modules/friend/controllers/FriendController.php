@@ -31,8 +31,9 @@ class FriendController extends Controller {
         ));
          $myfriends = HhUsers::model()->findAll($myfriendscriteria);
         $sefriends=$this->getsefriend();
+        $befriends = $this ->getbeFriend($userid);
          $prefriends=$this->getprefriend($model);
-        $this->render('index', array('model' => $model, 'prefriends' => $prefriends, 'sefriends' => $sefriends, 'myfriends' => $myfriends));
+        $this->render('index', array('model' => $model,'beFriendNum'=>count($this->getbeFriend($userid)),'myFriendNum'=>count($this->getmyFriend($userid)), 'prefriends' => $prefriends, 'sefriends' => $sefriends, 'myfriends' => $myfriends, 'befriends' => $befriends));
     }
 
     public function actionfindfriend() {
@@ -46,11 +47,11 @@ class FriendController extends Controller {
             $friendscriteria->condition = $temp;
         }
         $sefriends = HhUsers::model()->findAll($friendscriteria);
-        $this->renderPartial(
+        $content =$this->renderPartial(
                 'addfriends', array(
                  'sefriends' => $sefriends
-                )
-        );
+                ),true);
+        $this->ajaxOutputJSON(1, 'success', array('data'=>$content));
     }
     public function actiondeletefriend() {
         $userid = Yii::app()->user->getState('userid');
@@ -86,4 +87,21 @@ class FriendController extends Controller {
         $friends = $result->queryAll();
         return $friends;
     }
+    private function getmyFriend($id){
+        $userid = Yii::app()->user->getState('userid');
+        $myFriend = HhFriends::model()->findAll(array(
+            'condition'=>'userid=:userId',
+            'params'=>array(':userId'=>$userid),
+        ));
+        return $myFriend;
+    }
+    private function getbeFriend($id){
+        $userid = Yii::app()->user->getState('userid');
+        $beFriend = HhFriends::model()->with('user')->findAll(array(
+            'condition'=>'friendid=:userId',
+            'params'=>array(':userId'=>$userid),
+        ));
+        return $beFriend;
+    }
+
 }

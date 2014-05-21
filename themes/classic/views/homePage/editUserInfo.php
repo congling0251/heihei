@@ -47,7 +47,7 @@
 		<?php echo $form->error($model,'headphoto'); ?>
 		<div class='row'>
 			<div class="col-md-6">
-	        	<?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto); ?>
+	        	<?php echo CHtml::image(Yii::app()->theme->baseUrl . '/images/uploads/'.$model->headphoto,'', array('id' =>'imageView' )); ?>
 			</div>
 			<div class="col-md-6">
 	        	<label>请选择jpg,png或者gif类型的图片，大小不超过10M</label>

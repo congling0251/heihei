@@ -206,9 +206,46 @@
                 alert("姓名不能为空");
                 return false;
             }
-            safeAjaxFun('/heihei/friend/friend/findfriend','POST',{name:_name},'html',function(data){
-                $("#addfriends").empty().append(data);
+            safeAjaxFun('/heihei/friend/friend/findfriend','POST',{name:_name},'json',function(data){
+                $("#addfriends").empty().append(data.data.data);
             });
+        });
+        $("#myfriendmessage").delegate("a.comment_link","click",function(e){
+            var $this = $(this);
+            var _id = $this.attr('data-id');
+            safeAjaxFun('/heihei/HomePage/comment','POST',{'message_id':_id},'json',function(data){
+                if(data.result===1){
+                   $this.parents('.messageinfo').find('.comment').empty().append(data.data.content); 
+                }
+
+            });
+        });
+        $("#myfriendmessage").delegate("button.comment_btn","click",function(e){
+            var $now = $(this);
+            var _id = $now.parents('.messageinfo').find('.comment_link').attr('data-id');
+            var content = $now.parent().find('.heicomment').val();
+            if(content!=''){
+                safeAjaxFun('/heihei/HomePage/commentSubmit','POST',{'message_id':_id,'content':content},'json',function(data){
+                    if(data.result===1){
+                        alert(data.msg);
+                       $now.parents('.messageinfo').find('.comment_link').text('评论('+data.data.num+')'); 
+                       $now.parents('.comment').empty().append(data.data.content); 
+                    }
+                });
+            }
+            else{
+                alert('评论不能为空！');
+                return false;
+
+            }
+        });
+        $("#myfriendmessage").delegate("a.comment_reply","click",function(e){
+            var $now = $(this);
+            var name = $now.parents('.commentdetail').find('.author_name');
+            var content = $now.parents('.messageinfo').find('.heicomment');
+            var _content = '回复@'+name.text() +':'+content.val();
+            content.val(_content);
+            console.log(_content,content)
         });
         
         $("#friendtabs").delegate("#detail_serchfriend","click",function(e){
@@ -220,10 +257,21 @@
                 gender:_gender,
                 school:_school
             };
-             safeAjaxFun('/heihei/friend/friend/findfriend','POST',_data,'html',function(data){
-                $("#addfriends").empty().append(data);
+             safeAjaxFun('/heihei/friend/friend/findfriend','POST',_data,'json',function(data){
+                $("#addfriends").empty().append(data.data.data);
             });
         });
+        $('#HhUsers_headphoto').bind('change',function(){
+            var oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+
+            oFReader.onload = function (oFREvent) {
+              document.getElementById("imageView").src = oFREvent.target.result;
+            };
+            if (document.getElementById("HhUsers_headphoto").files.length === 0) { return; }
+                var oFile = document.getElementById("HhUsers_headphoto").files[0];
+                if (!rFilter.test(oFile.type)) { alert("您上传的不是图片"); return; }
+            oFReader.readAsDataURL(oFile);
+        })
         setInterval(newnoteajax,20000);
     });
 })(window);
