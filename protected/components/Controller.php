@@ -55,7 +55,7 @@ class Controller extends CController
         }
         $request = Yii::app()->getRequest();
         if($request->isAjaxRequest){            
-            if(Yii::app()->user->getState('safeNumber')===$_POST['safeNumber'] && Yii::app()->user->getState('loginIp') ===$request->userHostAddress){
+            if(isset($_POST['safeNumber']) && Yii::app()->user->getState('safeNumber')===$_POST['safeNumber'] && Yii::app()->user->getState('loginIp') ===$request->userHostAddress){
                 return true;   
             }else{
                 return false;
